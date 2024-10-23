@@ -1,12 +1,13 @@
 import Box from "./components/Box"
+import "./assets/css/tailwind.css"
+import { ToDoList } from "./components/ToDoList"
+import ContactPage from "./pages/contact"
 
 function App() {
 
   return (
     <>
-      <Box background="red" text="red" />
-      <Box background="green" text="green" />
-      <Box background="blue" />
+      <ContactPage />
     </>
   )
 }
