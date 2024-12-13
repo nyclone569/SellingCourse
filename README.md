@@ -11,4 +11,4 @@ Lý thuyết:
 - Các kiểu style: inline css, tạo file css, css module (less, sass), styled-components, tailwind css.
 - State: re-render sau mỗi lần setState, initialState là giá trị khởi tạo ban đầu và là 1 callback đc sử dụng khi logic tính toán initialState phức tạp. setState là một giá trị mới và là một callback.
 - Lưu ý: không sử dụng hook trong hoặc phía sau câu điều kiện if, for, while, switch hoặc trong một function khác. Chỉ sử dụng hook ở top level của function component.
-- useEffect: 
+- useEffect: để thực thi side effect (logic không được ưu tiên). Có dependencyList (array) là giá trị phụ thuộc, khi thay đổi thì side effect thực thi lại.
