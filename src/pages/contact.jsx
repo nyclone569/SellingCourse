@@ -96,8 +96,8 @@ export default function ContactPage() {
           </div>
           <a href="/" class="btn main rect">về trang chủ</a>
       </div> */}
-            </div>
-        </main>
+            </div >
+        </main >
 
     )
 }

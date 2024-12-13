@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <Header />
-      {/* <ContactPage /> */}
-      <RegisterPage />
+      <ContactPage />
+      {/* <RegisterPage /> */}
       <Footer />
     </>
   )
