@@ -14,19 +14,20 @@ function isDesktop() {
     }
 }
 
-$('.slider').flickity({
-    contain: true,
-    wrapAround: false,
-    autoPlay: true,
-    // freeScroll: true,
-    cellAlign: 'left',
-    prevNextButtons: false,
 
-})
 
 
 
 function homePage() {
+    $('.slider').flickity({
+        contain: true,
+        wrapAround: false,
+        autoPlay: true,
+        // freeScroll: true,
+        cellAlign: 'left',
+        prevNextButtons: false,
+
+    })
     if ($('#main .homepage').length === 0) return;
 
 
@@ -177,7 +178,7 @@ function courseDetailAccordion() {
         $(this).closest('.accordion').siblings('.active').removeClass('active').find('.content').stop().slideUp(200);
     })
 }
-courseDetailAccordion();
+
 
 
 function coursePage() {
@@ -191,8 +192,8 @@ function coursePage() {
 
 
 
-$(document).ready(function () {
-
+window.addEventListener('load', function () {
+    courseDetailAccordion();
     $('a').on('click', function (ev) {
         $('#header .progress').addClass('active')
         setTimeout(() => {

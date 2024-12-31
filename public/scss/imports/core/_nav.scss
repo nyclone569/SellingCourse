@@ -47,6 +47,9 @@
                 background: $main-cl;
                 @include transition-default;
                 color: $white-cl;
+                .namee {
+                    color: #fff !important;
+                }
             }
         }
     }

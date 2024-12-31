@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { PATH } from '../../config/path'
 
 export default function Header() {
     return (
@@ -13,24 +15,24 @@ export default function Header() {
                         </div>
                         <span className="text">menu</span>
                     </div>
-                    <a href="./" className="logo">
-                        <img src="img/logo.svg" alt="" />
+                    <Link to='/' className="logo">
+                        <img src="/img/logo.svg" alt="" />
                         <h1>Spacedev</h1>
-                    </a>
+                    </Link>
                     <div className="right">
                         <div className="have-login">
                             <div className="account">
-                                <a href="./profile.html" className="info">
-                                    <div className="name">Đặng Thuyền Vương</div>
+                                <Link to={PATH.profile.index} className="info">
+                                    <div className="name">Trương Đăng Nghĩa</div>
                                     <div className="avatar">
-                                        <img src="img/avt.png" alt="" />
+                                        <img src="/img/avt.png" alt="" />
                                     </div>
-                                </a>
+                                </Link>
                             </div>
                             <div className="hamberger"></div>
                             <div className="sub">
-                                <a href="#">Khóa học của tôi</a>
-                                <a href="#">Thông tin tài khoản</a>
+                                <Link to={PATH.profile.course}>Khóa học của tôi</Link>
+                                <Link to={PATH.profile.index}>Thông tin tài khoản</Link>
                                 <a href="#">Đăng xuất</a>
                             </div>
                         </div>
@@ -48,29 +50,29 @@ export default function Header() {
                         <a href="./signin.html">Đăng ký / Đăng nhập</a>
                     </li>
                     <li>
-                        <a href="./profile.html" className="account">
+                        <NavLink to={PATH.profile.index} className="account">
                             <div className="avatar">
-                                <img src="img/avt.png" alt="" />
+                                <img src="/img/avt.png" alt="" />
                             </div>
-                            <div className="name">Đặng Thuyền Vương</div>
-                        </a>
+                            <div className="namee">Trương Đăng Nghĩa</div>
+                        </NavLink>
                     </li>
                     <li>
-                        <a className="active" href="./">
+                        <NavLink to={PATH.home}>
                             Trang chủ
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="./team.html">Spacedev Team</a>
                     </li>
                     <li>
-                        <a href="./course-list.html">Khóa Học</a>
+                        <NavLink to={PATH.course}>Khóa Học</NavLink>
                     </li>
                     <li>
                         <a href="./project.html">Dự Án</a>
                     </li>
                     <li>
-                        <a href="./contact.html">Liên hệ</a>
+                        <NavLink to={PATH.contact}>Liên hệ</NavLink>
                     </li>
                 </ul>
             </nav>

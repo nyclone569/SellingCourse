@@ -291,7 +291,6 @@
         .contentbox {
             margin-top: 12px;
             padding-left: 40px;
-
         }
 
         .item {
@@ -527,7 +526,6 @@
             .testimonial {
                 .testimonial-item {
                     .item {
-
                         .ct,
                         .ct_m {
                             padding: 40px;
@@ -738,7 +736,6 @@
         }
 
         @include tablet {
-
             .item {
                 grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
                 grid-template-rows: minmax(auto, auto);
@@ -759,7 +756,6 @@
         @include mobile {
             .item {
                 grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-               
             }
 
             .list {
@@ -778,9 +774,6 @@
                 }
             }
         }
-
-
-
     }
 
     .section-action {
