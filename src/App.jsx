@@ -9,7 +9,9 @@ import CoursePage from "./pages/course"
 import HomePage from "./pages"
 import TeamPage from "./pages/team"
 import ProjectPage from "./pages/project"
+import FAQPage from "./pages/faq"
 import PaymentPage from "./pages/payment"
+import CoinPage from "./pages/coin"
 import SignInPage from "./pages/signin"
 import SignUpPage from "./pages/signup"
 import ResetPasswordPage from "./pages/reset-password"
@@ -42,7 +44,9 @@ function App() {
           <Route path={PATH.team} element={<TeamPage />} />
           <Route path={PATH.courseRegister} element={<RegisterPage />} />
           <Route path={PATH.project} element={<ProjectPage />} />
+          <Route path={PATH.faq} element={<FAQPage />} />
           <Route path={PATH.payment} element={<PaymentPage />} />
+          <Route path={PATH.coin} element={<CoinPage />} />
           <Route path={PATH.signin} element={<SignInPage />} />
           <Route path={PATH.signup} element={<SignUpPage />} />
           <Route path={PATH.resetPassword} element={<ResetPasswordPage />} />
