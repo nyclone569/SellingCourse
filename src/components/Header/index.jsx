@@ -63,13 +63,13 @@ export default function Header() {
                         </NavLink>
                     </li>
                     <li>
-                        <a href="./team.html">Spacedev Team</a>
+                        <NavLink to={PATH.team}>Spacedev Team</NavLink>
                     </li>
                     <li>
                         <NavLink to={PATH.course}>Khóa Học</NavLink>
                     </li>
                     <li>
-                        <a href="./project.html">Dự Án</a>
+                        <NavLink to={PATH.project}>Dự Án</NavLink>
                     </li>
                     <li>
                         <NavLink to={PATH.contact}>Liên hệ</NavLink>

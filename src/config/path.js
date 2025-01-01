@@ -3,9 +3,11 @@ const COURSE_PATH = '/course'
 
 export const PATH = {
     home: '/',
+    team: '/team',
     course: COURSE_PATH,
     courseDetail: COURSE_PATH + '/:slug/:id',
     courseRegister: '/register/:slug/:id',
+    project: '/project',
     payment: '/payment',
     contact: '/contact',
     signin: '/signin',
