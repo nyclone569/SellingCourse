@@ -7,9 +7,11 @@ import RegisterPage from "./pages/register/[slug]-id[id]"
 import { Route, Routes } from "react-router-dom"
 import CoursePage from "./pages/course"
 import HomePage from "./pages"
+import PaymentPage from "./pages/payment"
 import SignInPage from "./pages/signin"
 import SignUpPage from "./pages/signup"
 import ResetPasswordPage from "./pages/reset-password"
+import Page404 from "./pages/404"
 import ProfilePage from "./pages/profile"
 import MyCoursePage from "./pages/profile/course"
 import ProfileLayout from "./layouts/ProfileLayout"
@@ -36,6 +38,7 @@ function App() {
           </Route>
 
           <Route path={PATH.courseRegister} element={<RegisterPage />} />
+          <Route path={PATH.payment} element={<PaymentPage />} />
           <Route path={PATH.signin} element={<SignInPage />} />
           <Route path={PATH.signup} element={<SignUpPage />} />
           <Route path={PATH.resetPassword} element={<ResetPasswordPage />} />
@@ -48,6 +51,8 @@ function App() {
             <Route path={PATH.profile.coin} element={<MyCoinPage />} />
             <Route path={PATH.profile.viewedCourse} element={<MyViewedCoursePage />} />
           </Route>
+
+          <Route path='*' element={<Page404 />} />
         </Route>
       </Routes>
       {/* <ContactPage /> */}

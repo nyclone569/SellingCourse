@@ -6,6 +6,7 @@ export const PATH = {
     course: COURSE_PATH,
     courseDetail: COURSE_PATH + '/:slug/:id',
     courseRegister: '/register/:slug/:id',
+    payment: '/payment',
     contact: '/contact',
     signin: '/signin',
     signup: '/signup',
