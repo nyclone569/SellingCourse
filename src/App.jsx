@@ -26,13 +26,36 @@ import MyViewedCoursePage from "./pages/profile/viewed-course"
 import MainLayout from "./layouts/MainLayout"
 import { PATH } from "./config/path"
 import CourseDetailPage from "./pages/course/[slug]"
+import { useEffect, useState } from "react"
+import PrivateRouter from "./components/PrivateRouter"
+import AuthRouter from "./components/AuthRouter"
 
 function App() {
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user'))
+    } catch {
+      return null
+    }
+  })
+  const login = () => {
+    setUser({
+      name: "Truong Dang Nghia",
+      avatar: "/img/avt.png"
+    })
+  }
+  const logout = () => {
+    setUser()
+  }
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user))
+  }, [user])
 
   return (
     <>
       <Routes>
-        <Route element={<MainLayout />}>
+        <Route element={<MainLayout user={user} logout={logout} />}>
           <Route index element={<HomePage />} />
           <Route path={PATH.contact} element={<ContactPage />} />
 
@@ -47,18 +70,23 @@ function App() {
           <Route path={PATH.faq} element={<FAQPage />} />
           <Route path={PATH.payment} element={<PaymentPage />} />
           <Route path={PATH.coin} element={<CoinPage />} />
-          <Route path={PATH.signin} element={<SignInPage />} />
-          <Route path={PATH.signup} element={<SignUpPage />} />
-          <Route path={PATH.resetPassword} element={<ResetPasswordPage />} />
-
-          <Route path={PATH.profile.index} element={<ProfileLayout />}>
-            <Route index element={<ProfilePage />} />
-            <Route path={PATH.profile.course} element={<MyCoursePage />} />
-            <Route path={PATH.profile.payment} element={<MyPaymentPage />} />
-            <Route path={PATH.profile.project} element={<MyProjectPage />} />
-            <Route path={PATH.profile.coin} element={<MyCoinPage />} />
-            <Route path={PATH.profile.viewedCourse} element={<MyViewedCoursePage />} />
+          <Route element={<AuthRouter user={user} redirect={PATH.profile.index} />}>
+            <Route path={PATH.signin} element={<SignInPage login={login} />} />
+            <Route path={PATH.signup} element={<SignUpPage />} />
+            <Route path={PATH.resetPassword} element={<ResetPasswordPage />} />
           </Route>
+
+          <Route element={<PrivateRouter user={user} redirect={PATH.signin} />}>
+            <Route path={PATH.profile.index} element={<ProfileLayout user={user} />}>
+              <Route index element={<ProfilePage />} />
+              <Route path={PATH.profile.course} element={<MyCoursePage />} />
+              <Route path={PATH.profile.payment} element={<MyPaymentPage />} />
+              <Route path={PATH.profile.project} element={<MyProjectPage />} />
+              <Route path={PATH.profile.coin} element={<MyCoinPage />} />
+              <Route path={PATH.profile.viewedCourse} element={<MyViewedCoursePage />} />
+            </Route>
+          </Route>
+
 
           <Route path='*' element={<Page404 />} />
         </Route>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { PATH } from '../config/path'
 
-export default function ProfileLayout() {
+export default function ProfileLayout({ user }) {
     return (
         <main id="main">
+            {/* <Navigate to={PATH.home} /> */}
             <div className="profile">
                 <section>
                     <div className="top-info">

@@ -1,15 +1,42 @@
 import React from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { PATH } from '../config/path'
+import { useForm } from '../hooks/useForm'
+import { regexp, required } from '../utils/validate'
+import Field from '../components/Field'
 
-export default function SignInPage() {
+export default function SignInPage({ login }) {
+    const navigate = useNavigate()
+    const { values, register, validate, errors } = useForm({
+        username: [
+            required(),
+            regexp('email')
+        ],
+        password: [
+            required(),
+        ]
+    })
+
+    const onSubmit = (ev) => {
+        ev.preventDefault()
+        if (validate()) {
+            login()
+            navigate(PATH.profile.index)
+        }
+    }
     return (
         <main id="main">
             <div className="auth">
                 <div className="wrap">
                     {/* login-form */}
-                    <div className="ct_login">
+                    <form className="ct_login" onSubmit={onSubmit}>
                         <h2 className="title">Đăng nhập</h2>
-                        <input type="text" placeholder="Email / Số điện thoại" />
-                        <input type="password" placeholder="Mật khẩu" />
+                        <input placeholder="Email / Số điện thoại" {...register('username')} />
+                        {errors.username && <p>{errors.username}</p>}
+                        <input placeholder="Mật khẩu" type='password' {...register('password')} />
+                        {errors.password && <p>{errors.password}</p>}
+                        {/* <input type="text" placeholder="Email / Số điện thoại" />
+                        <input type="password" placeholder="Mật khẩu" /> */}
                         <div className="remember">
                             <label className="btn-remember">
                                 <div>
@@ -28,7 +55,7 @@ export default function SignInPage() {
                                 Đăng ký
                             </a>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </main>
