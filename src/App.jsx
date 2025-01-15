@@ -4,7 +4,7 @@ import ContactPage from "./pages/contact"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import RegisterPage from "./pages/register/[slug]-id[id]"
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useRoutes } from "react-router-dom"
 import CoursePage from "./pages/course"
 import HomePage from "./pages"
 import TeamPage from "./pages/team"
@@ -29,6 +29,7 @@ import CourseDetailPage from "./pages/course/[slug]"
 import { useEffect, useState } from "react"
 import PrivateRouter from "./components/PrivateRouter"
 import AuthRouter from "./components/AuthRouter"
+import { routers } from "./pages/routers"
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -52,9 +53,11 @@ function App() {
     localStorage.setItem('user', JSON.stringify(user))
   }, [user])
 
+  const element = useRoutes(routers(user, login, logout))
   return (
     <>
-      <Routes>
+      {element}
+      {/* <Routes>
         <Route element={<MainLayout user={user} logout={logout} />}>
           <Route index element={<HomePage />} />
           <Route path={PATH.contact} element={<ContactPage />} />
@@ -90,7 +93,7 @@ function App() {
 
           <Route path='*' element={<Page404 />} />
         </Route>
-      </Routes>
+      </Routes> */}
       {/* <ContactPage /> */}
       {/* <RegisterPage /> */}
     </>
