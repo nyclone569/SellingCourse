@@ -1,11 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { courseService } from '../../services/course'
-import CourseCard from '../courseCard'
+import CourseCard, { CourseCardLoading } from '../courseCard'
+import Skeleton from '../Skeleton'
 
 export default function ListCourse() {
-    const [courses, setCourses] = useState(() => {
-        return courseService.getCourse()
-    })
+    const [loading, setLoading] = useState(true)
+    const [courses, setCourses] = useState([])
+
+    useEffect(() => {
+        setLoading(true)
+        courseService.getCourse()
+        .then(res => res.json())
+        .then(data => {
+            setCourses(data.data)
+        })
+        .finally(() => {
+            setLoading(false)
+        })
+    }, [])
     return (
         <section className="section-1">
             <div className="container">
@@ -21,7 +33,8 @@ export default function ListCourse() {
                 </div>
                 <div className="list row">
                     {
-                        courses.map(e => <CourseCard key={e.id} {...e} />)
+                        loading ? Array.from(Array(6)).map((_, i) => <CourseCardLoading key={i}/>) :
+                        courses.map(e => <CourseCard key={e.id} {...e} />)                        
                     }
                 </div>
             </div>

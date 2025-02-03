@@ -54,8 +54,9 @@ const courses = [{
 }]
 
 export const courseService = {
-    getCourse() {
-        return courses
+    getCourse: () => {
+        // return courses
+        return fetch('https://course.spacedev.vn/elearning/v4/courses')
     },
 
     getCourseDetail(id) {
