@@ -19,10 +19,15 @@ export const useForm = (rules) => {
         return Object.keys(errorObject).length === 0
     }
 
+    const reset = () => {
+        setValues({})
+    }
+
     return {
         values,
         errors,
         register,
-        validate: _validate
+        validate: _validate,
+        reset
     }
 }

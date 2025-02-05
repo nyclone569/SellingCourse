@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import Field from '../components/Field';
 import { regexp, required, validate } from '../utils/validate';
 import { useForm } from '../hooks/useForm';
+import { organizationService } from '../services/organization';
+import { message } from 'antd'
+import Button from '../components/Button';
 
 export default function ContactPage() {
-    const { validate, register } = useForm({
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const { validate, register, values, reset } = useForm({
         name: [
             required('Xin vui lòng nhập họ và tên.')
         ],
@@ -26,20 +31,43 @@ export default function ContactPage() {
             required()
         ]
     })
-    const onSubmit = (ev) => {
-        ev.preventDefault()
+    const onSubmit = async (ev) => {
+        try {
+            ev.preventDefault()
 
-        if (validate()) {
-            console.log('validate success')
-        } else {
-            console.log('validate error')
+            if (validate()) {
+                setLoading(true)
+                const res = await organizationService.contact(values)
+                if(res.data.success){
+                    reset()
+                    message.success('Bạn đã gửi liên hệ thành công, chúng tôi sẽ xử lí trong thời gian sớm nhất!')
+                    setIsSuccess(true)
+                }
+            } else {
+                console.log('validate error')
+            }
+        } catch(err){
+
+        } finally{
+            setLoading(false)
         }
     }
     return (
         <main id="main">
             <div className="register-course">
                 <section className="section-1 wrap container">
-                    {/* <div class="main-sub-title">liên hệ</div> */}
+                    {
+                        isSuccess ? <>
+                            <h2 className="main-title">Liên hệ thành công</h2>
+                            <p className="top-des">Thông tin liên hệ của bạn đã được gửi, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất, xin cảm ơn!</p>
+                            <div className="btn cursor-default flex justify-center mt-4">
+                                <a href="#" className="link" onClick={(ev) => {
+                                    ev.preventDefault()
+                                    setIsSuccess(false)
+                                }}>Tiếp tục liên hệ</a>
+                            </div>
+                        </> :<>
+                               {/* <div class="main-sub-title">liên hệ</div> */}
                     <h2 className="main-title">HỢP TÁC CÙNG Spacedev</h2>
                     <p className="top-des">
                         Đừng ngần ngại liên hệ với <strong>Spacedev</strong> để cùng nhau tạo
@@ -82,20 +110,14 @@ export default function ContactPage() {
                             renderInput={(props) => <textarea {...props} cols={30} rows={10} />}
                             {...register('content')}
                         />
-                        <button className="btn main rect">đăng ký</button>
-                    </form>
+                        {/* <button className="btn main rect">đăng ký</button> */}
+                        <Button Loading={loading}>Đăng ký</Button>
+                    </form> 
+                        </>
+                    }
+                    
                 </section>
-                {/* <div class="register-success">
-          <div class="contain">
-              <div class="main-title">đăng ký thành công</div>
-              <p>
-                  <strong>Chào mừng Vương Đặng đã trở thành thành viên mới của Spacedev Team.</strong> <br>
-                  Cảm ơn bạn đã đăng ký khóa học tại <strong>Spacedev</strong>, chúng tôi sẽ chủ động liên lạc với bạn thông qua facebook
-                  hoặc số điện thoại của bạn.
-              </p>
-          </div>
-          <a href="/" class="btn main rect">về trang chủ</a>
-      </div> */}
+                
             </div >
         </main >
 

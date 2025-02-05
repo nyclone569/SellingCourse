@@ -1,5 +1,6 @@
 import Box from "./components/Box"
 import "./assets/css/tailwind.css"
+import "./assets/css/custom.css"
 import ContactPage from "./pages/contact"
 import Header from "./components/Header"
 import Footer from "./components/Footer"

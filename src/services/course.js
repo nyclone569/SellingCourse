@@ -1,3 +1,5 @@
+import { COURSE_API } from "../config/api"
+
 const courses = [{
     "id": 1,
     "money": 6000000,
@@ -56,7 +58,7 @@ const courses = [{
 export const courseService = {
     getCourse: () => {
         // return courses
-        return fetch('https://course.spacedev.vn/elearning/v4/courses')
+        return fetch(`${COURSE_API}/courses`)
     },
 
     getCourseDetail(id) {
