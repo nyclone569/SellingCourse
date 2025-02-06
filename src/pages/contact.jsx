@@ -5,10 +5,12 @@ import { useForm } from '../hooks/useForm';
 import { organizationService } from '../services/organization';
 import { message } from 'antd'
 import Button from '../components/Button';
+import { useAsync } from '../hooks/useAsync';
 
 export default function ContactPage() {
     const [isSuccess, setIsSuccess] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const {excute, loading} = useAsync(organizationService.contact)
+    // const [loading, setLoading] = useState(false)
     const { validate, register, values, reset } = useForm({
         name: [
             required('Xin vui lòng nhập họ và tên.')
@@ -36,9 +38,9 @@ export default function ContactPage() {
             ev.preventDefault()
 
             if (validate()) {
-                setLoading(true)
-                const res = await organizationService.contact(values)
-                if(res.data.success){
+                // setLoading(true)
+                const res = await excute(values)
+                if(res){
                     reset()
                     message.success('Bạn đã gửi liên hệ thành công, chúng tôi sẽ xử lí trong thời gian sớm nhất!')
                     setIsSuccess(true)
@@ -48,8 +50,6 @@ export default function ContactPage() {
             }
         } catch(err){
 
-        } finally{
-            setLoading(false)
         }
     }
     return (
@@ -111,7 +111,7 @@ export default function ContactPage() {
                             {...register('content')}
                         />
                         {/* <button className="btn main rect">đăng ký</button> */}
-                        <Button Loading={loading}>Đăng ký</Button>
+                        <Button loading={loading}>Đăng ký</Button>
                     </form> 
                         </>
                     }
