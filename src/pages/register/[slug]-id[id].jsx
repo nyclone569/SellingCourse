@@ -5,14 +5,17 @@ import { useForm } from '../../hooks/useForm';
 import { useParams } from 'react-router-dom';
 import { courseService } from '../../services/course';
 import { currency } from '../../utils/currency';
+import { useFetch } from '../../hooks/useFetch';
 
 export default function RegisterPage() {
 
     const { id } = useParams()
-    const [detail, setDetail] = useState(() => {
-        return courseService.getCourseDetail(parseInt(id))
-    })
-    console.log(useParams())
+
+    const {data, loading} = useFetch(() => courseService.getCourseDetail(id))
+    // const [detail, setDetail] = useState(() => {
+    //     return courseService.getCourseDetail(parseInt(id))
+    // })
+    // console.log(useParams())
     const { validate, register, values } = useForm({
         name: [
             required('Xin vui lòng nhập họ và tên.')
@@ -40,6 +43,11 @@ export default function RegisterPage() {
             console.log('validate error')
         }
     }
+    if(loading) return null
+
+    const {data: detail} = data
+
+    if(!detail) return <div style={{margin:'100px 0'}}>...Not Found...</div>
     return (
         <main id="main">
             {

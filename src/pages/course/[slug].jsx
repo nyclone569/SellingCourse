@@ -1,17 +1,52 @@
 import React, { useState } from 'react'
-import { generatePath, Link, useParams } from 'react-router-dom'
+import { generatePath, Link, useParams, useSearchParams } from 'react-router-dom'
 import { courseService } from '../../services/course'
 import { PATH } from '../../config/path'
 import { currency } from '../../utils/currency'
+import { useFetch } from '../../hooks/useFetch'
+import CourseCard from '../../components/courseCard'
+import { useScrollTop } from '../../hooks/useScrollTop'
+import Skeleton from '../../components/Skeleton'
 
 export default function CourseDetailPage() {
     const { id } = useParams()
-    const [detail, setDetail] = useState(() => {
-        return courseService.getCourseDetail(parseInt(id))
-    })
+    const [searchParams, setSearchParams] = useSearchParams()
+    useScrollTop([id])
+    const {data, loading} = useFetch(() => courseService.getCourseDetail(id), [id])
 
+    const {data: related} = useFetch(() => courseService.getRelated(id), [id])
+    // const [detail, setDetail] = useState(() => {
+    //     return courseService.getCourseDetail(parseInt(id))
+    // })
+
+    if(loading) {
+        return <main id="main">
+                    <div className="course-detail">
+                        <section className="banner style2" style={{ '--background': "#cde6fb" }}>
+                            <div className="container">
+                                <div className="info">
+                                    <h1><Skeleton width={500} height={64}/></h1>
+                                    <div className="row">
+                                        <div className="date">
+                                        <Skeleton width={200} height={24}/>
+                                        </div>
+                                        <div className="time">
+                                        <Skeleton width={200} height={24}/>
+                                        </div>
+                                    </div>
+                                    <Skeleton style={{marginTop: 40}} width={150} height={46}/>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+    }
+
+    const {data: detail} = data
+
+    if(!detail) return <div style={{margin: '100px 0'}}>...Not Found...</div>
+    
     const registerPath = generatePath(PATH.courseRegister, { slug: detail.slug, id: detail.id })
-    console.log(registerPath)
     return (
         <main id="main">
             <div className="course-detail">
@@ -201,78 +236,9 @@ export default function CourseDetailPage() {
                             <h2 className="main-title">Liên quan</h2>
                         </div>
                         <div className="list row">
-                            <div className="col-md-4 course">
-                                <div className="wrap">
-                                    <a href="#" className="cover">
-                                        <img src="/img/img.png" alt="" />
-                                    </a>
-                                    <div className="info">
-                                        <a className="name" href="#">
-                                            Reactjs Advanced
-                                        </a>
-                                        <p className="des">
-                                            One of the best corporate fashion brands in Sydney
-                                        </p>
-                                    </div>
-                                    <div className="bottom">
-                                        <div className="teacher">
-                                            <div className="avatar">
-                                                <img src="/img/avt.png" alt="" />
-                                            </div>
-                                            <div className="name">Trương Đăng Nghĩa</div>
-                                        </div>
-                                        <div className="register-btn">Đăng Ký</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4 course">
-                                <div className="wrap">
-                                    <a href="#" className="cover">
-                                        <img src="/img/img2.png" alt="" />
-                                    </a>
-                                    <div className="info">
-                                        <a className="name" href="#">
-                                            Nodejs Advanced
-                                        </a>
-                                        <p className="des">
-                                            One of the best corporate fashion brands in Sydney
-                                        </p>
-                                    </div>
-                                    <div className="bottom">
-                                        <div className="teacher">
-                                            <div className="avatar">
-                                                <img src="/img/avt.png" alt="" />
-                                            </div>
-                                            <div className="name">Trương Đăng Nghĩa</div>
-                                        </div>
-                                        <div className="register-btn">Đăng Ký</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4 course">
-                                <div className="wrap">
-                                    <a href="#" className="cover">
-                                        <img src="/img/img3.png" alt="" />
-                                    </a>
-                                    <div className="info">
-                                        <a className="name" href="#">
-                                            Laravel framework
-                                        </a>
-                                        <p className="des">
-                                            One of the best corporate fashion brands in Sydney
-                                        </p>
-                                    </div>
-                                    <div className="bottom">
-                                        <div className="teacher">
-                                            <div className="avatar">
-                                                <img src="/img/avt.png" alt="" />
-                                            </div>
-                                            <div className="name">Trương Đăng Nghĩa</div>
-                                        </div>
-                                        <div className="register-btn">Đăng Ký</div>
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                related && related?.data.map(e => <CourseCard key={e.id} {...e}/>)
+                            }
                         </div>
                     </div>
                 </section>

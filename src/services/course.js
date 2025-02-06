@@ -1,4 +1,4 @@
-import { COURSE_API } from "../config/api"
+import { api, COURSE_API } from "../config/api"
 
 const courses = [{
     "id": 1,
@@ -56,12 +56,19 @@ const courses = [{
 }]
 
 export const courseService = {
-    getCourse: () => {
+    getCourse: (query = '') => {
         // return courses
-        return fetch(`${COURSE_API}/courses`)
+        return api.get(`${COURSE_API}/courses${query}`)
     },
 
     getCourseDetail(id) {
-        return courses.find(e => e.id === id)
+        // return courses.find(e => e.id === id)
+        return api.get(`${COURSE_API}/courses/${id}`)
+    },
+
+    getRelated(id) {
+        // const start = Math.floor(Math.random() * (courses.length -3))
+        // return courses.filter(e => e.id !== id).slide(start, start+3)
+        return api.get(`${COURSE_API}/courses/related/${id}`)
     }
 }

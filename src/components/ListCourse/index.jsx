@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { courseService } from '../../services/course'
 import CourseCard, { CourseCardLoading } from '../courseCard'
 import Skeleton from '../Skeleton'
+import { useFetch } from '../../hooks/useFetch'
 
 export default function ListCourse() {
-    const [loading, setLoading] = useState(true)
-    const [courses, setCourses] = useState([])
+    const {data: courses, loading} = useFetch(() => courseService.getCourse('?limit=6'))
+    // const [loading, setLoading] = useState(true)
+    // const [courses, setCourses] = useState([])
 
-    useEffect(() => {
-        setLoading(true)
-        courseService.getCourse()
-        .then(res => res.json())
-        .then(data => {
-            setCourses(data.data)
-        })
-        .finally(() => {
-            setLoading(false)
-        })
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     courseService.getCourse()
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         setCourses(data.data)
+    //     })
+    //     .finally(() => {
+    //         setLoading(false)
+    //     })
+    // }, [])
     return (
         <section className="section-1">
             <div className="container">
@@ -34,7 +36,7 @@ export default function ListCourse() {
                 <div className="list row">
                     {
                         loading ? Array.from(Array(6)).map((_, i) => <CourseCardLoading key={i}/>) :
-                        courses.map(e => <CourseCard key={e.id} {...e} />)                        
+                        courses.data.map(e => <CourseCard key={e.id} {...e} />)                        
                     }
                 </div>
             </div>
