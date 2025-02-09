@@ -88,24 +88,24 @@ function homePage() {
     // $('#video-intro').on('load', function () {
     //     frames[0].document.head.appendChild('<style>.ytp-scroll-min{display: none;}</style>');
     // })
-    let videoIntroWrap = $('.section-different .videodif'),
-        videoPopup = $('#popup-video .video-src'),
-        src = videoIntroWrap.data('src');
-    videoIntroWrap.click(function (e) {
-        e.stopPropagation();
-        videoPopup.html('<video controls autoplay loop><source src="' + src + '" type="video/mp4">Your browser does not support the video tag.</video>');
-        setTimeout(() => {
-            $('#popup-video').fadeIn(200)
-        }, 200);
-    });
+    // let videoIntroWrap = $('.section-different .videodif'),
+    //     videoPopup = $('#popup-video .video-src'),
+    //     src = videoIntroWrap.data('src');
+    // videoIntroWrap.click(function (e) {
+    //     e.stopPropagation();
+    //     videoPopup.html('<video controls autoplay loop><source src="' + src + '" type="video/mp4">Your browser does not support the video tag.</video>');
+    //     setTimeout(() => {
+    //         $('#popup-video').fadeIn(200)
+    //     }, 200);
+    // });
 
-    function closePopupVideo() {
-        videoPopup.html('');
-        $('#popup-video').fadeOut(200);
-    }
-    $('#popup-video .close').on('click', function () {
-        closePopupVideo();
-    });
+    // function closePopupVideo() {
+    //     videoPopup.html('');
+    //     $('#popup-video').fadeOut(200);
+    // }
+    // $('#popup-video .close').on('click', function () {
+    //     closePopupVideo();
+    // });
 
     $(document).keyup(function (e) {
         if (e.key === "Escape") {
@@ -114,16 +114,16 @@ function homePage() {
     });
 
     // load video background
-    function loadVideoBG() {
-        let videoBgWrap = $('.banner .video-bg'),
-            srcVideoBg = videoBgWrap.data('src');
-        setTimeout(function () {
-            videoBgWrap.html('<video autoplay loop muted><source src="' + srcVideoBg + '" type="video/mp4">Your browser does not support the video tag.</video>')
-        }, 800);
-    }
-    if (isDesktop()) {
-        loadVideoBG();
-    }
+    // function loadVideoBG() {
+    //     let videoBgWrap = $('.banner .video-bg'),
+    //         srcVideoBg = videoBgWrap.data('src');
+    //     setTimeout(function () {
+    //         videoBgWrap.html('<video autoplay loop muted><source src="' + srcVideoBg + '" type="video/mp4">Your browser does not support the video tag.</video>')
+    //     }, 800);
+    // }
+    // if (isDesktop()) {
+    //     loadVideoBG();
+    // }
 
     // $('.video').click(function () {
     //     $('.btn-video-intro').fadeIn(200);

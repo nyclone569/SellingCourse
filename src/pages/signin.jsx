@@ -1,13 +1,20 @@
 import React from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { PATH } from '../config/path'
 import { useForm } from '../hooks/useForm'
 import { regexp, required } from '../utils/validate'
 import Field from '../components/Field'
+import { useAuth } from '../components/AuthContext'
+import Input from '../components/Input'
+import { useAsync } from '../hooks/useAsync'
+import Button from '../components/Button'
 
-export default function SignInPage({ login }) {
+export default function SignInPage() {
+    const {login} = useAuth()
+    const {loading, excute: loginService} = useAsync(login)
     const navigate = useNavigate()
-    const { values, register, validate, errors } = useForm({
+
+    const form = useForm({
         username: [
             required(),
             regexp('email')
@@ -19,9 +26,9 @@ export default function SignInPage({ login }) {
 
     const onSubmit = (ev) => {
         ev.preventDefault()
-        if (validate()) {
-            login()
-            navigate(PATH.profile.index)
+        if (form.validate()) {
+            loginService(form.values)
+            // navigate(PATH.profile.index)
         }
     }
     return (
@@ -31,12 +38,11 @@ export default function SignInPage({ login }) {
                     {/* login-form */}
                     <form className="ct_login" onSubmit={onSubmit}>
                         <h2 className="title">Đăng nhập</h2>
-                        <input placeholder="Email / Số điện thoại" {...register('username')} />
-                        {errors.username && <p>{errors.username}</p>}
-                        <input placeholder="Mật khẩu" type='password' {...register('password')} />
-                        {errors.password && <p>{errors.password}</p>}
-                        {/* <input type="text" placeholder="Email / Số điện thoại" />
-                        <input type="password" placeholder="Mật khẩu" /> */}
+
+                        <Input {...form.register('username')} className={'mb-5'} placeholder="Email / Số điện thoại"/>
+
+                        <Input {...form.register('password')} className={'mb-5'} placeholder="Mật khẩu" type='password'/>
+
                         <div className="remember">
                             <label className="btn-remember">
                                 <div>
@@ -44,16 +50,16 @@ export default function SignInPage({ login }) {
                                 </div>
                                 <p>Nhớ mật khẩu</p>
                             </label>
-                            <a href="./reset-password.html" className="forget">
+                            <Link to={PATH.resetPassword} className="forget">
                                 Quên mật khẩu?
-                            </a>
+                            </Link>
                         </div>
-                        <button className="btn rect main btn-login">đăng nhập</button>
+                        <Button loading={loading} className="btn rect main btn-login">đăng nhập</Button>
                         <div className="text-register">
                             <span>Nếu bạn chưa có tài khoản?</span>{" "}
-                            <a className="link" href="./signup.html">
+                            <Link className="link" to={PATH.signup}>
                                 Đăng ký
-                            </a>
+                            </Link>
                         </div>
                     </form>
                 </div>

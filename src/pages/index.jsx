@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ListCourse from '../components/ListCourse'
 import { Link } from 'react-router-dom'
 import { PATH } from '../config/path'
+import { VideoModel } from '../components/VideoModel'
+import { Modal } from '../components/Modal'
 
 export default function HomePage() {
+    const [isOpenVideoModal, setIsOpenVideoModal] = useState(false)
     return (
         <main id="main">
             <div className="homepage">
@@ -58,16 +61,19 @@ export default function HomePage() {
                 <section className="section-different">
                     <div className="container">
                         <div className="row">
+                            <Modal maskCloseable visible={isOpenVideoModal} onCancel={() => setIsOpenVideoModal(false)}>
+                                <iframe width="800px" height="450px" src="https://www.youtube.com/embed/m7FlLehvM2A?si=EuY8EJUWxJMn0geI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </Modal>
                             <div className="titlebox col-md-6 col-sm-12 col-xs-12">
                                 <h2 className="main-title white textleft">
                                     <span>Giá trị Cốt lỗi</span> <br /> tại Spacedev
                                 </h2>
-                                <div className="videodif" data-src="video/cfd-video-intro.mp4">
+                                <div className="videodif" data-src="" onClick={() => setIsOpenVideoModal(true)}>
                                     <img
                                         src="https://svtech.com.vn/wp-content/uploads/2020/07/dexus-office-space.jpg"
                                         alt=""
                                     />
-                                    <div className="play-btn btn-video-intro">
+                                    <div className="play-btn btn-video-intro" >
                                         <img src="/img/play-icon.svg" alt="" />
                                     </div>
                                 </div>
@@ -78,7 +84,7 @@ export default function HomePage() {
                                         tăng năng suất và cải thiện cuộc sống.
                                     </p>
                                 </div>
-                            </div>
+                            </div>                            
                             <div className="contentbox col-md-6 col-sm-12 col-xs-12">
                                 <div className="item">
                                     <h4>Tập trung vào khách hàng</h4>

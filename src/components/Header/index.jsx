@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { PATH } from '../../config/path'
+import { useAuth } from '../AuthContext'
+import { avatarDefault } from '../../config'
 
-export default function Header({ user, logout }) {
-    const _logout = (ev) => {
-        ev.preventDefault()
-        logout()
-    }
+export default function Header() {
+    const {user, logout} = useAuth()
     return (
         <>
             <header id="header">
@@ -31,7 +30,7 @@ export default function Header({ user, logout }) {
                                         <Link to={PATH.profile.index} className="info">
                                             <div className="name">Trương Đăng Nghĩa</div>
                                             <div className="avatar">
-                                                <img src="/img/avt.png" alt="" />
+                                                <img src={user.avatar ? user.avatar : avatarDefault} alt="" />
                                             </div>
                                         </Link>
                                     </div>
@@ -39,7 +38,10 @@ export default function Header({ user, logout }) {
                                     <div className="sub">
                                         <Link to={PATH.profile.course}>Khóa học của tôi</Link>
                                         <Link to={PATH.profile.index}>Thông tin tài khoản</Link>
-                                        <a onClick={_logout} href="#">Đăng xuất</a>
+                                        <Link to="#" onClick={(ev) => {
+                                            ev.preventDefault()
+                                            logout()
+                                        }}>Đăng xuất</Link>
                                     </div>
                                 </div>
                             ) : (

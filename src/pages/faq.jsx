@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Accordion } from '../components/Accordion'
 
 export default function FAQPage() {
+
     return (
         <main id="main">
             <div className="faqpage">
@@ -10,83 +12,34 @@ export default function FAQPage() {
                         <div className="row">
                             <div className="accordion_wrap col-md-8 offset-md-2 col-sm-12">
                                 <h3 className="accordion__title-main">Thông tin chung</h3>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Spacedev là gì?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Thành viên sáng lập Spacedev gồm những ai?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Đăng ký khóa học như thế nào?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
+                                <Accordion.Group>
+                                    <Accordion title={"Spacedev là gì?"}>I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>
+                                    <Accordion title={"Thành viên sáng lập Spacedev gồm những ai?"}>I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>
+                                    <Accordion title={"Đăng ký khóa học như thế nào?"} >I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>       
+                                </Accordion.Group>                             
                             </div>
                             <div className="accordion_wrap col-md-8 offset-md-2 col-sm-12">
                                 <h3 className="accordion__title-main">
                                     Đăng ký, thanh toán và điểm thưởng
                                 </h3>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Spacedev là gì?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Thành viên sáng lập Spacedev gồm những ai?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
-                                <div className="accordion">
-                                    <div className="accordion__title">
-                                        <h2>
-                                            <strong>Đăng ký khóa học như thế nào?</strong>
-                                        </h2>
-                                    </div>
-                                    <div className="content">
-                                        I'd like to demonstrate a powerful little pattern called
-                                        “Server-Fetched Partials” that offers some tangible benefits
-                                        over alternatives like VueJS for simple page interactions.
-                                    </div>
-                                </div>
+                                <h3 className="accordion__title-main">Thông tin chung</h3>
+                                <Accordion.Group>
+                                    <Accordion title={"Spacedev là gì?"} >I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>
+                                    <Accordion title={"Thành viên sáng lập Spacedev gồm những ai?"} >I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>
+                                    <Accordion title={"Đăng ký khóa học như thế nào?"} >I'd like to demonstrate a powerful little pattern called
+                                    “Server-Fetched Partials” that offers some tangible benefits
+                                    over alternatives like VueJS for simple page interactions.</Accordion>       
+                                </Accordion.Group>                                   
                             </div>
                         </div>
                     </section>

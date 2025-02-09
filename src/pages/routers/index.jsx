@@ -25,79 +25,111 @@ import SignUpPage from "../signup";
 import TeamPage from "../team";
 import { profile } from "./profile";
 
-export const routers = (user, login, logout) => {
-    return [
-        {
-            element: <MainLayout user={user} logout={logout} />,
-            children: [
-                {
-                    element: <HomePage />,
-                    index: true
-                },
-                {
-                    element: <ContactPage />,
-                    path: PATH.contact
-                },
-                {
-                    path: PATH.course,
-                    children: [
-                        {
-                            element: <CoursePage />,
-                            index: true
-                        },
-                        {
-                            element: <CourseDetailPage />,
-                            path: PATH.courseDetail
-                        }
-                    ]
-                },
-                {
-                    element: <TeamPage />,
-                    path: PATH.team
-                },
-                {
-                    element: <RegisterPage />,
-                    path: PATH.courseRegister
-                },
-                {
-                    element: <ProjectPage />,
-                    path: PATH.project
-                },
-                {
-                    element: <FAQPage />,
-                    path: PATH.faq
-                },
-                {
-                    element: <PaymentPage />,
-                    path: PATH.payment
-                },
-                {
-                    element: <CoinPage />,
-                    path: PATH.coin
-                },
-                {
-                    element: <AuthRouter user={user} redirect={PATH.profile.index} />,
-                    children: [
-                        {
-                            element: <SignInPage login={login} />,
-                            path: PATH.signin
-                        },
-                        {
-                            element: <SignUpPage />,
-                            path: PATH.signup
-                        },
-                        {
-                            element: <ResetPasswordPage />,
-                            path: PATH.resetPassword
-                        }
-                    ]
-                },
-                profile(user),
-                {
-                    element: <Page404 />,
-                    path: '*'
-                }
-            ]
-        }
-    ]
-}
+export const routers = [
+    {
+        element: <MainLayout />,
+        children: [
+            {
+                element: <HomePage />,
+                index: true
+            },
+            {
+                element: <ContactPage />,
+                path: PATH.contact
+            },
+            {
+                path: PATH.course,
+                children: [
+                    {
+                        element: <CoursePage />,
+                        index: true
+                    },
+                    {
+                        element: <CourseDetailPage />,
+                        path: PATH.courseDetail
+                    }
+                ]
+            },
+            {
+                element: <TeamPage />,
+                path: PATH.team
+            },
+            {
+                element: <RegisterPage />,
+                path: PATH.courseRegister
+            },
+            {
+                element: <ProjectPage />,
+                path: PATH.project
+            },
+            {
+                element: <FAQPage />,
+                path: PATH.faq
+            },
+            {
+                element: <PaymentPage />,
+                path: PATH.payment
+            },
+            {
+                element: <CoinPage />,
+                path: PATH.coin
+            },
+            {
+                element: <AuthRouter redirect={PATH.profile.index} />,
+                children: [
+                    {
+                        element: <SignInPage />,
+                        path: PATH.signin
+                    },
+                    {
+                        element: <SignUpPage />,
+                        path: PATH.signup
+                    },
+                    {
+                        element: <ResetPasswordPage />,
+                        path: PATH.resetPassword
+                    }
+                ]
+            },
+            {
+                element: <PrivateRouter redirect={PATH.signin}/>,
+                children: [
+                    {
+                        element: <ProfileLayout/>,
+                        path: PATH.profile.index,
+                        children: [
+                            {
+                                element: <ProfilePage/>,
+                                index: true
+                            },
+                            {
+                                element: <MyCoursePage/>,
+                                path: PATH.profile.course
+                            },
+                            {
+                                element: <MyProjectPage/>,
+                                path: PATH.profile.project
+                            },
+                            {
+                                element: <MyCoinPage/>,
+                                path: PATH.profile.coin
+                            },
+                            {
+                                element: <MyPaymentPage/>,
+                                path: PATH.profile.payment
+                            },
+                            {
+                                element: <MyViewedCoursePage/>,
+                                path: PATH.profile.viewedCourse
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                element: <Page404 />,
+                path: '*'
+            }
+        ]
+    }
+]
