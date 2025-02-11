@@ -5,9 +5,9 @@ import { useForm } from '../hooks/useForm'
 import { regexp, required } from '../utils/validate'
 import Field from '../components/Field'
 import { useAuth } from '../components/AuthContext'
-import Input from '../components/Input'
 import { useAsync } from '../hooks/useAsync'
 import Button from '../components/Button'
+import { Input } from 'antd'
 
 export default function SignInPage() {
     const {login} = useAuth()

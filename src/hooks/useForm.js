@@ -16,10 +16,10 @@ export const useForm = (rules, initialValue = {}) => {
                         [name] : rules[name]
                     }, _values)
 
-                    setErrors({ ...errors, [name]: error[name] || ''})
+                    setErrors(prev => ({ ...prev, [name]: error[name] || ''}))
                 }
 
-                setValues(_values)
+                setValues(prev => ({...prev, [name]: ev.target.value}))
             }
         }
     }

@@ -21,9 +21,9 @@ export default function CourseCard({ money, thumbnailUrl, long_description, shor
                 <div className="bottom">
                     <div className="teacher">
                         <div className="avatar">
-                            <img src="/img/avt.png" alt="" />
+                            <img src="/img/teacher.png" alt="" />
                         </div>
-                        <div className="name">Trương Đăng Nghĩa</div>
+                        <div className="name">Đặng Thuyền Vương</div>
                     </div>
                     <Link to={registerPath} className="register-btn">
                         {money} đ

@@ -28,7 +28,7 @@ export default function Header() {
                                 <div className="have-login">
                                     <div className="account">
                                         <Link to={PATH.profile.index} className="info">
-                                            <div className="name">Trương Đăng Nghĩa</div>
+                                            <div className="name">{user.name}</div>
                                             <div className="avatar">
                                                 <img src={user.avatar ? user.avatar : avatarDefault} alt="" />
                                             </div>
@@ -59,17 +59,22 @@ export default function Header() {
             </header>
             <nav className="nav">
                 <ul>
-                    <li>
-                        <a href="./signin.html">Đăng ký / Đăng nhập</a>
-                    </li>
-                    <li>
-                        <NavLink to={PATH.profile.index} className="account">
-                            <div className="avatar">
-                                <img src="/img/avt.png" alt="" />
-                            </div>
-                            <div className="namee">Trương Đăng Nghĩa</div>
-                        </NavLink>
-                    </li>
+                    {
+                        !user? (
+                            <li>
+                                <NavLink to={PATH.signin}>Đăng ký / Đăng nhập</NavLink>
+                            </li>
+                        ) : (
+                        <li>
+                            <NavLink to={PATH.profile.index} className="account">
+                                <div className="avatar">
+                                    <img src="/img/avt.png" alt="" />
+                                </div>
+                                <div className="namee">{user.name}</div>
+                            </NavLink>
+                        </li>
+                        )
+                    }
                     <li>
                         <NavLink to={PATH.home}>
                             Trang chủ

@@ -1,6 +1,6 @@
 import { AuthContext, useAuth } from '@/components/AuthContext'
 import Button from '@/components/Button'
-import Input from '@/components/Input'
+import { Input } from '@/components/Input'
 import { useAsync } from '@/hooks/useAsync'
 import { useForm } from '@/hooks/useForm'
 import { userService } from '@/services/user'

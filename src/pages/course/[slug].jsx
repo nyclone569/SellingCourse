@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { generatePath, Link, useParams, useSearchParams } from 'react-router-dom'
 import { courseService } from '../../services/course'
 import { PATH } from '../../config/path'
@@ -17,12 +17,21 @@ export default function CourseDetailPage() {
     const { id } = useParams()
     const [isOpenVideoModal, setIsOpenVideoModal] = useState(false)
 
-    const [searchParams, setSearchParams] = useSearchParams()
     useScrollTop([id])
-    const {data, loading} = useFetch(() => courseService.getCourseDetail(id), [id])
+    const {data: detail, loading} = useFetch(() => courseService.getCourseDetail(id), [id])
 
     const {data: related} = useFetch(() => courseService.getRelated(id), [id])
-    console.log('re-render')
+    
+    const {openingTime, registerPath} = useMemo(() => {
+        if(detail){
+            const registerPath = generatePath(PATH.courseRegister, { slug: detail.data.slug, id: detail.data.id })
+            const openingTime = moment(detail.opening_time).format('DD/MM/YYYY')
+            return {
+                registerPath, openingTime
+            }
+        }
+        return {}
+    }, [detail])
 
     if(loading) {
         return <main id="main">
@@ -47,31 +56,26 @@ export default function CourseDetailPage() {
                 </main>
     }
 
-    const {data: detail} = data
-
-    if(!detail) return <Page404 />
-    
-    const registerPath = generatePath(PATH.courseRegister, { slug: detail.slug, id: detail.id })
-    const openingTime = moment(detail.opening_time).format('DD/MM/YYYY')
+    if(!detail) return <Page404 />  
 
     return (
         <main id="main">
             <div className="course-detail">
-                <section className="banner style2" style={{ '--background': detail.template_color_banner || "#cde6fb" }}>
+                <section className="banner style2" style={{ '--background': detail.data.template_color_banner || "#cde6fb" }}>
                     <div className="container">
                         <div className="info">
-                            <h1>{detail.title}</h1>
+                            <h1>{detail.data.title}</h1>
                             <div className="row">
                                 <div className="date">
                                     <strong>Khai giảng:</strong> {openingTime}
                                 </div>
                                 <div className="time">
-                                    <strong>Thời lượng:</strong> 18 buổi
+                                    <strong>Thời lượng:</strong> {detail.data.count_video} buổi
                                 </div>
                             </div>
                             <Link
                                 className="btn white round"
-                                style={{ '--color-btn': detail.template_color_btn ||"#70b6f1" }}
+                                style={{ '--color-btn': detail.data.template_color_btn ||"#70b6f1" }}
                                 to={registerPath}
                             >
                                 đăng ký
@@ -86,7 +90,7 @@ export default function CourseDetailPage() {
                                 </div>{" "}
                                 <span>giới thiệu</span>
                             </div>
-                            <div className="money">{currency(detail.money)} VND</div>
+                            <div className="money">{currency(detail.data.money)} VND</div>
                         </div>
                     </div>
                     <Modal visible={isOpenVideoModal} maskCloseable onCancel={() => setIsOpenVideoModal(false)}>
@@ -95,7 +99,7 @@ export default function CourseDetailPage() {
                 </section>
                 <section className="section-2">
                     <div className="container">
-                        <p className="des">{detail.long_description}</p>
+                        <p className="des">{detail.data.long_description}</p>
                         <h2 className="title">giới thiệu về khóa học</h2>
                         <div className="cover">
                             <img src="/img/course-detail-img.png" alt="" />
@@ -103,16 +107,16 @@ export default function CourseDetailPage() {
                         <h3 className="title">nội dung khóa học</h3>
                         <Accordion.Group>
                             {
-                                detail.content.map((e, i) => <Accordion date={i+1} key={i} {...e}>{e.content}</Accordion>)
+                                detail.data.content.map((e, i) => <Accordion date={i+1} key={i} {...e}>{e.content}</Accordion>)
                             }
                         </Accordion.Group>
                         <h3 className="title">yêu cầu cần có</h3>
                         <div className="row row-check">
-                            { detail.required.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                            
+                            { detail.data.required.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                            
                         </div>
                         <h3 className="title">hình thức học</h3>
                         <div className="row row-check">
-                            { detail.benefits.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                       
+                            { detail.data.benefits.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                       
                         </div>
                         <h3 className="title">
                             <div className="date-start">lịch học</div>
@@ -122,18 +126,18 @@ export default function CourseDetailPage() {
                         </h3>
                         <p>
                             <strong>Ngày bắt đầu: </strong> {openingTime} <br />
-                            <strong>Thời gian học: </strong> {detail.schedule}
+                            <strong>Thời gian học: </strong> {detail.data.schedule}
                         </p>
                         <h3 className="title">Người dạy</h3>
                         <div className="teaches">
-                            <Teacher {...detail.teacher}/>
+                            <Teacher {...detail.data.teacher}/>
                         </div>
                         {
-                            detail.mentor.length > 0 && <>
+                            detail.data.mentor.length > 0 && <>
                                 <h3 className="title">Người hướng dẫn</h3>
                                 <div className="teaches">
                                     {
-                                        detail.mentor.map(e => <Teacher key={e.id} {...e}/>)
+                                        detail.data.mentor.map(e => <Teacher key={e.id} {...e}/>)
                                     }
                                 </div>
                             </>

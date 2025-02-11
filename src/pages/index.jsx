@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import ListCourse from '../components/ListCourse'
 import { Link } from 'react-router-dom'
 import { PATH } from '../config/path'
-import { VideoModel } from '../components/VideoModel'
 import { Modal } from '../components/Modal'
-
 export default function HomePage() {
+
     const [isOpenVideoModal, setIsOpenVideoModal] = useState(false)
     return (
         <main id="main">

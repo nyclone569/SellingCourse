@@ -56,10 +56,10 @@ export default function RegisterPage() {
 
         ]
     }, {
-        email: user.username,
-        name: user.name,
-        fb: user.fb,
-        phone: user.phone
+        email: user?.username,
+        name: user?.name,
+        fb: user?.fb,
+        phone: user?.phone
     })
     const [isSuccess, setIsSuccess] = useState(false)
 

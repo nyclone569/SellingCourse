@@ -5,21 +5,8 @@ import Skeleton from '../Skeleton'
 import { useFetch } from '../../hooks/useFetch'
 
 export default function ListCourse() {
-    const {data: courses, loading} = useFetch(() => courseService.getCourse('?limit=6'))
-    // const [loading, setLoading] = useState(true)
-    // const [courses, setCourses] = useState([])
 
-    // useEffect(() => {
-    //     setLoading(true)
-    //     courseService.getCourse()
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         setCourses(data.data)
-    //     })
-    //     .finally(() => {
-    //         setLoading(false)
-    //     })
-    // }, [])
+    const {data: courses, loading} = useFetch(() => courseService.getCourse('?limit=6'))
     return (
         <section className="section-1">
             <div className="container">

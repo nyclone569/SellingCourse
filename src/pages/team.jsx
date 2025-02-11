@@ -61,7 +61,6 @@ export default function TeamPage() {
                         <div className="item col-md-3 col-sm-4 col-xs-6">
                             <div className="wrap">
                                 <div className="cover">
-                                    <span className="text">H</span>
                                     <img src="img/avt.png" alt="" />
                                 </div>
                                 <div className="info">
