@@ -3,7 +3,7 @@ import { authService } from "../../services/auth";
 import { message } from "antd";
 import { clearToken, clearUser, getUser, setToken, setUser } from "../../utils/token";
 import { userService } from "../../services/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "../../config/path";
 
 export const AuthContext = createContext({})
@@ -13,6 +13,7 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({children}) => {
     const [user, _setUser] = useState(getUser)
     const navigate = useNavigate()
+    const {state} = useLocation()
     useEffect(() => {
         setUser(user || null)
     }, [user])
@@ -22,11 +23,7 @@ export const AuthProvider = ({children}) => {
             const res = await authService.login(data)
             if(res.data){
                 setToken(res.data)
-                const user = await userService.getProfile()
-
-                _setUser(user.data)
-                message.success('Đăng nhập tài khoản thành công!')
-                navigate(PATH.profile.index)
+                await getProfile()
             }
         } catch(err){
             console.log(err)
@@ -35,6 +32,20 @@ export const AuthProvider = ({children}) => {
             }
         }
     }
+
+    const getProfile = async () => {
+        const user = await userService.getProfile()
+        _setUser(user.data)
+        message.success('Đăng nhập tài khoản thành công!')
+        if(state?.redirect){
+            navigate(state.redirect)
+        } else {
+            navigate(PATH.profile.index)
+        }
+
+        
+    }
+
     const logout = () => {
         clearToken()
         clearUser()
@@ -42,5 +53,5 @@ export const AuthProvider = ({children}) => {
         message.success('Đăng xuất tài khoản thành công!')
     }
 
-    return <AuthContext.Provider value={{user, login, logout, setUser: _setUser}}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{user, login, logout, setUser: _setUser, getProfile}}>{children}</AuthContext.Provider>
 }

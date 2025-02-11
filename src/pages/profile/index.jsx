@@ -22,7 +22,7 @@ export default function ProfilePage() {
         ],
         fb: [
             required(),
-            regexp('url')
+            regexp(/(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/, 'Xin vui lòng nhập đúng website facebook của bạn.')
         ]
     }, user)
 

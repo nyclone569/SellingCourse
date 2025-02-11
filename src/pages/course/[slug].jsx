@@ -8,17 +8,21 @@ import CourseCard from '../../components/courseCard'
 import { useScrollTop } from '../../hooks/useScrollTop'
 import Skeleton from '../../components/Skeleton'
 import { Accordion } from '../../components/Accordion'
+import moment from 'moment'
+import { Teacher } from '@/components/Teacher'
+import Page404 from '../404'
+import { Modal } from '@/components/Modal'
 
 export default function CourseDetailPage() {
     const { id } = useParams()
+    const [isOpenVideoModal, setIsOpenVideoModal] = useState(false)
+
     const [searchParams, setSearchParams] = useSearchParams()
     useScrollTop([id])
     const {data, loading} = useFetch(() => courseService.getCourseDetail(id), [id])
 
     const {data: related} = useFetch(() => courseService.getRelated(id), [id])
-    // const [detail, setDetail] = useState(() => {
-    //     return courseService.getCourseDetail(parseInt(id))
-    // })
+    console.log('re-render')
 
     if(loading) {
         return <main id="main">
@@ -45,19 +49,21 @@ export default function CourseDetailPage() {
 
     const {data: detail} = data
 
-    if(!detail) return <div style={{margin: '100px 0'}}>...Not Found...</div>
+    if(!detail) return <Page404 />
     
     const registerPath = generatePath(PATH.courseRegister, { slug: detail.slug, id: detail.id })
+    const openingTime = moment(detail.opening_time).format('DD/MM/YYYY')
+
     return (
         <main id="main">
             <div className="course-detail">
-                <section className="banner style2" style={{ '--background': "#cde6fb" }}>
+                <section className="banner style2" style={{ '--background': detail.template_color_banner || "#cde6fb" }}>
                     <div className="container">
                         <div className="info">
                             <h1>{detail.title}</h1>
                             <div className="row">
                                 <div className="date">
-                                    <strong>Khai giảng:</strong> 12/10/2020
+                                    <strong>Khai giảng:</strong> {openingTime}
                                 </div>
                                 <div className="time">
                                     <strong>Thời lượng:</strong> 18 buổi
@@ -65,7 +71,7 @@ export default function CourseDetailPage() {
                             </div>
                             <Link
                                 className="btn white round"
-                                style={{ '--color-btn': "#70b6f1" }}
+                                style={{ '--color-btn': detail.template_color_btn ||"#70b6f1" }}
                                 to={registerPath}
                             >
                                 đăng ký
@@ -74,7 +80,7 @@ export default function CourseDetailPage() {
                     </div>
                     <div className="bottom">
                         <div className="container">
-                            <div className="video">
+                            <div className="video" onClick={() => setIsOpenVideoModal(true)}>
                                 <div className="icon">
                                     <img src="/img/play-icon-white.png" alt="" />
                                 </div>{" "}
@@ -83,6 +89,9 @@ export default function CourseDetailPage() {
                             <div className="money">{currency(detail.money)} VND</div>
                         </div>
                     </div>
+                    <Modal visible={isOpenVideoModal} maskCloseable onCancel={() => setIsOpenVideoModal(false)}>
+                    <iframe width="800px" height="450px" src="https://www.youtube.com/embed/m7FlLehvM2A?si=EuY8EJUWxJMn0geI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </Modal>
                 </section>
                 <section className="section-2">
                     <div className="container">
@@ -99,26 +108,11 @@ export default function CourseDetailPage() {
                         </Accordion.Group>
                         <h3 className="title">yêu cầu cần có</h3>
                         <div className="row row-check">
-                            <div className="col-md-6">Đã từng học qua HTML, CSS</div>
-                            <div className="col-md-6">
-                                Cài đặt phần mềm Photoshop, Adobe illustrator, Skype
-                            </div>
+                            { detail.required.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                            
                         </div>
                         <h3 className="title">hình thức học</h3>
                         <div className="row row-check">
-                            <div className="col-md-6">
-                                Học offline tại văn phòng, cùng Đăng Nghĩa và 3 đồng nghiệp.
-                            </div>
-                            <div className="col-md-6">
-                                Dạy và thực hành thêm bài tập online thông qua Skype.
-                            </div>
-                            <div className="col-md-6">
-                                Được các mentor và các bạn trong team Spacedev hổ trợ thông qua
-                                group Spacedev Facebook hoặc phần mềm điều khiển máy tính.
-                            </div>
-                            <div className="col-md-6">
-                                Thực hành 2 dự án thực tế với sự hướng dẫn của Spacedev Team.
-                            </div>
+                            { detail.benefits.map((e, i) => <div key={i} className="col-md-6">{e.content}</div>)}                       
                         </div>
                         <h3 className="title">
                             <div className="date-start">lịch học</div>
@@ -127,42 +121,28 @@ export default function CourseDetailPage() {
                             </div>
                         </h3>
                         <p>
-                            <strong>Ngày bắt đầu: </strong> 09/09/2020 <br />
-                            <strong>Thời gian học: </strong> Thứ 3 từ 18h45-21h45, Thứ 7 từ
-                            12h-15h, Chủ nhật từ 15h-18h
+                            <strong>Ngày bắt đầu: </strong> {openingTime} <br />
+                            <strong>Thời gian học: </strong> {detail.schedule}
                         </p>
                         <h3 className="title">Người dạy</h3>
                         <div className="teaches">
-                            <div className="teacher">
-                                <div className="avatar">
-                                    <img src="/img/avt.png" alt="" />
-                                </div>
-                                <div className="info">
-                                    <div className="name">Trương Đăng Nghĩa</div>
-                                    <div className="title">
-                                        Founder Spacedev &amp; Fullstack developer
-                                    </div>
-                                    <p className="intro">
-                                        My education, career, and even personal life have been molded by
-                                        one simple principle; well designed information resonates with
-                                        people and can change lives.I have a passion for making
-                                        information resonate. It all starts with how people think. With
-                                        how humans work. As humans we have learned how to read and write
-                                        and while that is incredible, we are also already hard-wired to
-                                        do some things a bit more "automatically"
-                                    </p>
-                                    <p>
-                                        <strong>Website:</strong>{" "}
-                                        <a href="#">https://github.com/nyclone569</a>
-                                    </p>
-                                </div>
-                            </div>
+                            <Teacher {...detail.teacher}/>
                         </div>
+                        {
+                            detail.mentor.length > 0 && <>
+                                <h3 className="title">Người hướng dẫn</h3>
+                                <div className="teaches">
+                                    {
+                                        detail.mentor.map(e => <Teacher key={e.id} {...e}/>)
+                                    }
+                                </div>
+                            </>
+                        }
                         <div className="bottom">
                             <div className="user">
                                 <img src="/img/user-group-icon.png" alt="" /> 12 bạn đã đăng ký
                             </div>
-                            <div className="btn main btn-register round">đăng ký</div>
+                            <Link className="btn main btn-register round" to={registerPath}>đăng ký</Link>
                             <div className="btn-share btn overlay round btn-icon">
                                 <img src="/img/facebook.svg" alt="" />
                             </div>

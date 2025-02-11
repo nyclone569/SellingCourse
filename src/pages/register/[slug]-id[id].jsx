@@ -1,17 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { regexp, required, validate } from '../../utils/validate';
 import Field from '../../components/Field';
 import { useForm } from '../../hooks/useForm';
-import { useParams } from 'react-router-dom';
+import { Link, redirect, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { courseService } from '../../services/course';
 import { currency } from '../../utils/currency';
 import { useFetch } from '../../hooks/useFetch';
+import Page404 from '../404';
+import { Select } from '@/components/Select';
+import { Checkbox } from '@/components/Checkbox';
+import { useAuth } from '@/components/AuthContext';
+import { message } from 'antd';
+import { PATH } from '@/config/path';
+import { useAsync } from '@/hooks/useAsync';
+import Button from '@/components/Button';
+import { handleError } from '@/utils/handleError';
 
 export default function RegisterPage() {
 
     const { id } = useParams()
-
+    const { user } = useAuth()
+    const navigate = useNavigate()
+    const {pathname} = useLocation()
     const {data, loading} = useFetch(() => courseService.getCourseDetail(id))
+    const { loading: registerLoading, excute: courseRegisterService } = useAsync(courseService.register)
+
+    useEffect(() => {
+        if(!user){
+            message.warning('Vui lòng đăng nhập trước khi đăng kí khóa học!')
+            navigate(PATH.signin, {state: {redirect: pathname}})
+        }
+    }, [user])
     // const [detail, setDetail] = useState(() => {
     //     return courseService.getCourseDetail(parseInt(id))
     // })
@@ -31,42 +50,55 @@ export default function RegisterPage() {
         fb: [
             required(),
             regexp(/(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/, 'Xin vui lòng nhập đúng website facebook của bạn.')
+        ],
+        payment:[
+            required(),
+
         ]
+    }, {
+        email: user.username,
+        name: user.name,
+        fb: user.fb,
+        phone: user.phone
     })
     const [isSuccess, setIsSuccess] = useState(false)
 
-    const onSubmit = () => {
-
-        if (validate()) {
-            setIsSuccess(true)
-        } else {
-            console.log('validate error')
+    const onSubmit = async () => {
+        try {
+            if (validate()) {
+                await courseRegisterService(id, values)
+                setIsSuccess(true)
+            } else {
+                console.log('validate error')
+            }
+        } catch(err){
+            handleError(err)
         }
     }
     if(loading) return null
 
     const {data: detail} = data
 
-    if(!detail) return <div style={{margin:'100px 0'}}>...Not Found...</div>
+    if(!detail) return <Page404/>
     return (
         <main id="main">
             {
                 isSuccess ? (
-                    <div className="register-success" style={{ margin: '40px auto', width: '570px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '50px' }}>
+                    <div className="register-success flex flex-col items-center gap-10 text-center max-w-2xl" style={{ margin: '40px auto'}}>
                         <div className="contain">
                             <div className="main-title">Đăng ký thành công</div>
                             <p>
                                 <strong>
                                     Chào mừng {values.name} đã trở thành thành viên mới của Spacedev Team.
-                                </strong>{" "}
+                                </strong>
                                 <br />
                                 Cảm ơn bạn đã đăng ký khóa học tại <strong>Spacedev</strong>, chúng tôi sẽ
                                 chủ động liên lạc với bạn thông qua facebook hoặc số điện thoại của bạn.
                             </p>
                         </div>
-                        <a href="/" className="btn main rect">
-                            về trang chủ
-                        </a>
+                        <Link to={PATH.profile.course} className="btn main rect">
+                            Về khóa học của tôi
+                        </Link>
                     </div>
                 ) : (
                     <section className="register-course">
@@ -99,7 +131,7 @@ export default function RegisterPage() {
                                         {...register('phone')}
                                     />
                                     <Field
-                                        label="Email"
+                                        label="Email" disabled
                                         placeholder="Email của bạn"
                                         required
                                         {...register('email')}
@@ -111,29 +143,27 @@ export default function RegisterPage() {
                                         {...register('fb')}
                                     />
                                     <Field
-                                        label="Sử dụng COIN"
                                         {...register('coin')}
+                                        label="Sử dụng COIN"                                        
                                         renderInput={(props) => (
-                                            <div className="checkcontainer">
+                                            <Checkbox {...props}>
                                                 Hiện có <strong>300 COIN</strong>
-                                                {/* Giảm giá còn <span><strong>5.800.000 VND</strong>, còn lại 100 COIN</span> */}
-                                                {/* Cần ít nhất 200 COIN để giảm giá */}
-                                                <input type="checkbox" {...props} />
-                                                <span className="checkmark" />
-                                            </div>
+                                            </Checkbox>
                                         )}
                                     />
                                     <Field
                                         label="Hình thức thanh toán"
                                         {...register('payment')}
                                         renderInput={(props) => (
-                                            <div className="select">
-                                                <div className="head">Chuyển khoản</div>
-                                                <div className="sub">
-                                                    <a href="#">Chuyển khoản</a>
-                                                    <a href="#">Thanh toán tiền mặt</a>
-                                                </div>
-                                            </div>
+                                            <Select
+                                                {...props}
+                                                placeholder="Hình thức thanh toán"
+                                                options={[
+                                                    {value: 'chuyen-khoan', label: 'Chuyển khoản'},
+                                                    {value: 'thanh-toan-tien-mat', label: 'Thanh toán tiền mặt'},
+                                                    
+                                                ]}
+                                            />
                                         )}
                                     />
                                     <Field
@@ -142,7 +172,7 @@ export default function RegisterPage() {
                                         {...register('note')}
                                     />
 
-                                    <button onClick={onSubmit} className="btn main rect">đăng ký</button>
+                                    <Button loading={registerLoading} onClick={onSubmit} className="btn main rect">đăng ký</Button>
                                 </div>
                             </div>
                         </div>

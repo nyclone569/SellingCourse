@@ -19,7 +19,7 @@ export default function HomePage() {
                                     <span style={{ color: "rgb(229, 57, 53)" }}>vị trí đứng</span> mà
                                     là <span style={{ color: "rgb(63, 81, 181)" }}>hướng đi</span>
                                 </h2>
-                                <a href="https://roadmap.sh/frontend" className="btn main round">
+                                <a href="https://roadmap.sh/frontend" target="_blank" className="btn main round">
                                     Roadmap
                                 </a>
                             </div>

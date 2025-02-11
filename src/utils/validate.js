@@ -18,8 +18,9 @@ export const validate = (rules, forms) => {
     for (let name in rules) {
         for (let rule of rules[name]) {
             if (rule.required) {
-                if (!forms[name]?.trim()) {
+                if((typeof forms[name] === 'boolean' && !forms[name]) || (typeof forms[name] !== 'boolean' && !forms[name]?.trim())){
                     errorObject[name] = rule.message || ERROR_MESSAGE.required
+                    break;
                 }
             }
             if (rule.regexp && forms[name]) {

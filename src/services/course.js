@@ -70,5 +70,11 @@ export const courseService = {
         // const start = Math.floor(Math.random() * (courses.length -3))
         // return courses.filter(e => e.id !== id).slide(start, start+3)
         return api.get(`${COURSE_API}/courses/related/${id}`)
+    },
+    getMyCourse(){
+        return api.get(`${COURSE_API}/courses/my-course`)
+    },
+    register(id, data){
+        return api.post(`${COURSE_API}/courses/register/${id}`, data)
     }
 }

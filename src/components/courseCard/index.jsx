@@ -5,11 +5,12 @@ import Skeleton from '../Skeleton'
 
 export default function CourseCard({ money, thumbnailUrl, long_description, short_description, title, slug, id }) {
     const path = generatePath(PATH.courseDetail, { slug, id })
+    const registerPath = generatePath(PATH.courseRegister, { slug, id })
     return (
         <div className="col-md-4 course">
             <div className="wrap">
                 <Link className="cover" to={path}>
-                    <img src={thumbnailUrl} alt="" />
+                    <img src={thumbnailUrl} onError={(e) => e.target.src="/img/course/khoa-hoc-react-js-javascript-sd1.jpg"} alt="" />
                 </Link>
                 <div className="info">
                     <Link className="name" to={path}>
@@ -24,9 +25,9 @@ export default function CourseCard({ money, thumbnailUrl, long_description, shor
                         </div>
                         <div className="name">Trương Đăng Nghĩa</div>
                     </div>
-                    <a href="/register.html" className="register-btn">
+                    <Link to={registerPath} className="register-btn">
                         {money} đ
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
