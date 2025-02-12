@@ -9,11 +9,20 @@ The template for this project is based on the HTML template provided in the cour
 
 ## Key Features
 - **ReactJS Components**: Utilizing functional components, hooks, and state management.
-- **Learning Focus**: This project covers the core ReactJS concepts such as JSX, props, state, useEffect, and event handling.
+- **Learning Focus**: This project covers the core ReactJS concepts such as JSX, props, state, useEffect, useHooks, and event handling.
 
 ## Purpose
 
 This project is meant for educational purposes and serves as an implementation of key ReactJS principles in a real-world scenario. It is intended to help beginners and learners get practical experience with ReactJS.
+
+## Important
+
+Some features are still in development and are not yet fully implemented in the current version. These features will be added in future updates:
+
+- **Real course purchase functionality**: Purchase courses online will be available.
+- **Project completion tracking**: Tracking which course you have completed.
+- **Payment history**: Users will be able to view their past transactions.
+- **Coin management**: The system for earning and managing virtual coins (which can be used as discounts for future courses).
 
 ## Installation
 
