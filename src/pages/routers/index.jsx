@@ -1,7 +1,8 @@
+import { PATH } from "../../config/path";
+
 import HomePage from "..";
 import AuthRouter from "../../components/AuthRouter";
 import PrivateRouter from "../../components/PrivateRouter";
-import { PATH } from "../../config/path";
 import MainLayout from "../../layouts/MainLayout";
 import ProfileLayout from "../../layouts/ProfileLayout";
 import Page404 from "../404";
@@ -23,7 +24,32 @@ import ResetPasswordPage from "../reset-password";
 import SignInPage from "../signin";
 import SignUpPage from "../signup";
 import TeamPage from "../team";
-import { profile } from "./profile";
+
+// import { lazy } from "react";
+// const AuthRouter = lazy(() => import("../../components/AuthRouter"))
+// const PrivateRouter = lazy(() => import("../../components/PrivateRouter"))
+// const HomePage = lazy(() => import(".."));
+// const MainLayout = lazy(() => import("../../layouts/MainLayout"));
+// const ProfileLayout = lazy(() => import("../../layouts/ProfileLayout"));
+// const Page404 = lazy(() => import("../404"));
+// const CoinPage = lazy(() => import("../coin"));
+// const ContactPage = lazy(() => import("../contact"));
+// const CoursePage = lazy(() => import("../course"));
+// const CourseDetailPage = lazy(() => import("../course/[slug]"));
+// const FAQPage = lazy(() => import("../faq"));
+// const PaymentPage = lazy(() => import("../payment"));
+// const ProfilePage = lazy(() => import("../profile"));
+// const MyCoinPage = lazy(() => import("../profile/coin"));
+// const MyCoursePage = lazy(() => import("../profile/course"));
+// const MyPaymentPage = lazy(() => import("../profile/payment"));
+// const MyProjectPage = lazy(() => import("../profile/project"));
+// const MyViewedCoursePage = lazy(() => import("../profile/viewed-course"));
+// const ProjectPage = lazy(() => import("../project"));
+// const RegisterPage = lazy(() => import("../register/[slug]-id[id]"));
+// const ResetPasswordPage = lazy(() => import("../reset-password"));
+// const SignUpPage = lazy(() => import("../signup"));
+// const TeamPage = lazy(() => import("../team"));
+// const SignInPage = lazy(() => import("../signin"))
 
 export const routers = [
     {
