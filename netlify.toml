@@ -1,5 +1,25 @@
 [[redirects]]
-  from = "/api/*"
-  to = "https://course.spacedev.vn/:splat"
+  from = "/api/course/*"
+  to = "https://course.spacedev.vn/elearning/v4/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/organization/*"
+  to = "https://course.spacedev.vn/organization/:splat"
+  status = 200
+  force = true
+
+
+[[redirects]]
+  from = "/api/user/*"
+  to = "https://course.spacedev.vn/users/:splat"
+  status = 200
+  force = true
+
+
+[[redirects]]
+  from = "/api/auth/*"
+  to = "https://course.spacedev.vn/authentication/v2/:splat"
   status = 200
   force = true
