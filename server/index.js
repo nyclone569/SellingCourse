@@ -14,6 +14,10 @@ app.use(cors(corsOptions));
 
 app.use(express.static(path.resolve('../dist')));
 
+app.get('/elearning/v4/courses', (req, res) => {
+    res.json({ message: 'This is the API response.' });
+});
+
 app.all('*', (req, res) => {
     res.sendFile(path.resolve('../dist/index.html'))
 })
