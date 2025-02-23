@@ -193,7 +193,8 @@ function coursePage() {
 
 
 window.addEventListener('load', function () {
-    courseDetailAccordion();
+    setTimeout(() => {
+        courseDetailAccordion();
     $('a').on('click', function (ev) {
         $('#header .progress').addClass('active')
         setTimeout(() => {
@@ -326,4 +327,5 @@ window.addEventListener('load', function () {
         }
     }
     testimonialSlider();
+    }, 1000)
 })
