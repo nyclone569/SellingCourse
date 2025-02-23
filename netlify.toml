@@ -28,11 +28,12 @@
     headers = { Access-Control-Allow-Origin = "*" }
 
 [[headers]]
-for = "/*"
-[headers.values]
-Access-Control-Allow-Origin = "*"
-Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+    Access-Control-Max-Age = "86400"
 
 [[redirects]]
 from = "/*"
