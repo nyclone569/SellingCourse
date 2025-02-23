@@ -1,9 +1,18 @@
 import express from 'express'
 import path from 'path'
+import cors from 'cors'
 
 const app = express()
 
-app.use(express.static('../dist'))
+const corsOptions = {
+    origin: '*', 
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type',
+};
+
+app.use(cors(corsOptions));
+
+app.use(express.static(path.resolve('../dist')));
 
 app.all('*', (req, res) => {
     res.sendFile(path.resolve('../dist/index.html'))
