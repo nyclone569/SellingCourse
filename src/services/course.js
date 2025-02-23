@@ -58,23 +58,23 @@ const courses = [{
 export const courseService = {
     getCourse: (query = '') => {
         // return courses
-        return api.get(`${COURSE_API}/courses${query}`)
+        return api.get(`/api/course/courses${query}`)
     },
 
     getCourseDetail(id) {
         // return courses.find(e => e.id === id)
-        return api.get(`${COURSE_API}/courses/${id}`)
+        return api.get(`/api/course/courses/${id}`)
     },
 
     getRelated(id) {
         // const start = Math.floor(Math.random() * (courses.length -3))
         // return courses.filter(e => e.id !== id).slide(start, start+3)
-        return api.get(`${COURSE_API}/courses/related/${id}`)
+        return api.get(`/api/course/courses/related/${id}`)
     },
     getMyCourse(){
-        return api.get(`${COURSE_API}/courses/my-course`)
+        return api.get(`/api/course/courses/my-course`)
     },
     register(id, data){
-        return api.post(`${COURSE_API}/courses/register/${id}`, data)
+        return api.post(`/api/course/courses/register/${id}`, data)
     }
 }
