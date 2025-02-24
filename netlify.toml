@@ -12,15 +12,14 @@
     headers = { Access-Control-Allow-Origin = "*" }
 
 
-
-
-
 [[redirects]]
-  from = "/api/auth/*"
-  to = "https://course.spacedev.vn/authentication/v2/:splat"
+  from = "/api/user/*"
+  to = "https://course.spacedev.vn/users/:splat"
   status = 200
   force = true
     headers = { Access-Control-Allow-Origin = "*" }
+
+
 
 [[headers]]
   for = "/api/*"
