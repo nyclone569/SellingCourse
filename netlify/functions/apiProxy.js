@@ -5,7 +5,7 @@ exports.handler = async (event, context) => {
     const token = getToken()
     const response = await axios({
       method: 'POST', 
-      url: 'https://course.spacedev.vn/authentication/v2/:splat', 
+      url: 'https://course.spacedev.vn/authentication/v2/login', 
       data: JSON.parse(event.body),
       headers: {
         'Content-Type': 'application/json',

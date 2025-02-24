@@ -19,6 +19,12 @@
   force = true
     headers = { Access-Control-Allow-Origin = "*" }
 
+[[redirects]]
+  from = "/api/login/*"
+  to = "/.netlify/functions/apiProxy"
+  status = 200
+  force = true
+  headers = { Access-Control-Allow-Origin = "*" }
 
 
 [[headers]]
