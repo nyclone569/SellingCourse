@@ -26,6 +26,13 @@ api.interceptors.response.use((res) => {
             return api(error.config)
     
         }
+        else if (error.response && error.response.status === 500) {
+            console.error('Server error:', error.response.data);
+          } else if (error.code === 'ECONNABORTED') {
+            console.error('Request timeout or redirect issue');
+          }
+          return Promise.reject(error);
+          
     
     } catch(err){
 
