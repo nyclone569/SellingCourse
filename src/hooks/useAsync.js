@@ -16,7 +16,7 @@ export const useAsync = (promise) => {
             setStatus('success')
             return res
         } catch(err){
-            setError(err)
+            setError(err.response || err.message || err)
             setStatus('error')
             throw err
         } finally{

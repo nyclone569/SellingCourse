@@ -6,9 +6,9 @@ const app = express()
 
 app.use(express.static('../dist'));
 app.use(cors({
-    origin: 'https://sellingcourse.netlify.app',
+    origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept','Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
 }))
