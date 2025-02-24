@@ -12,12 +12,7 @@
     headers = { Access-Control-Allow-Origin = "*" }
 
 
-[[redirects]]
-  from = "/api/user/*"
-  to = "https://course.spacedev.vn/users/:splat"
-  status = 302
-  force = true
-    headers = { Access-Control-Allow-Origin = "*" }
+
 
 
 [[redirects]]
