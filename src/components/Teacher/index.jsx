@@ -4,7 +4,7 @@ export const Teacher = ({title, description, website, avatar}) => {
   return (
     <div className="teacher">
         <div className="avatar">
-            <img src={avatar} alt="" />
+            <img src={avatar || "/img/teacher.png"} alt=""  onError={(e) => { e.currentTarget.src = "/images/teacher.png"; }}/>
         </div>
         <div className="info">
             <div className="name">{title}</div>

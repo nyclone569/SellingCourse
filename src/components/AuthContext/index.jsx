@@ -34,16 +34,26 @@ export const AuthProvider = ({children}) => {
     }
 
     const getProfile = async () => {
-        const user = await userService.getProfile()
-        _setUser(user.data)
-        message.success('Đăng nhập tài khoản thành công!')
-        if(state?.redirect){
-            navigate(state.redirect)
-        } else {
-            navigate(PATH.profile.index)
+        try {
+            const user = await userService.getProfile()
+            _setUser(user.data)
+            message.success('Đăng nhập tài khoản thành công!')
+            if(state?.redirect){
+                navigate(state.redirect)
+            } else {
+                navigate(PATH.profile.index)
+            }
+        } catch (err) {
+            console.log(err)
+            // If token refresh failed, clear user data and redirect to login
+            if (err.message === 'Token refresh failed' || err.message === 'Authentication required') {
+                logout()
+                message.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.')
+                navigate(PATH.signin)
+            } else if(err?.response?.data?.message) {
+                message.error(err.response.data.message)
+            }
         }
-
-        
     }
 
     const logout = () => {

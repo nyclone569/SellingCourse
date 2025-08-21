@@ -11,11 +11,14 @@ export default function MyCoursePage() {
     const {loading, data: courses} = useFetch(courseService.getMyCourse)
 
     if(loading) return Array.from(Array(5)).map((_, i) => <div key={i} className='mb-5'><Skeleton height={250}/></div>) 
+    
+    // Handle case when courses is undefined or not an array
+    if (!courses || !courses.data || !Array.isArray(courses.data) || courses.data.length === 0) {
+        return <p>Bạn hiện tại chưa đăng ký khóa học nào.</p>
+    }
+    
     return (
         <div className="tab2">
-            {
-                courses.length === 0 && <p>Bạn hiện tại chưa đăng ký khóa học nào.</p>
-            }
             {
                 courses.data.map(e => {
                     const coursePath = generatePath(PATH.courseDetail, {slug: e.course.slug, id: e.course.id})

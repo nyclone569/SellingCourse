@@ -7,7 +7,7 @@ import path from 'path'
 export default defineConfig({
   server: {
     proxy: {
-      '/elearning/v4/courses': 'https://course.spacedev.vn', 
+      '/elearning/v4': 'https://course.spacedev.vn', 
     },
   },
   plugins: [react()],

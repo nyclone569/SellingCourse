@@ -1,22 +1,22 @@
-import { api, USER_API } from "../config/api"
+import { userApi } from "../config/api"
 
 export const userService = {
     signup(data) {
-        return api.post(`/api/user/register`, data)
+        return userApi.post(`/register`, data)
     },
     resendEmail(data){
-        return api.post(`/api/user/resend-email`, data)
+        return userApi.post(`/resend-email`, data)
     },
     getProfile(){
-        return api.get(`/api/user`)
+        return userApi.get(``)
     },
     updateInfo(data){
-        return api.patch(`/api/user`, data)
+        return userApi.patch(``, data)
     },
     sendEmailResetPassword(data){
-        return api.post(`/api/user/reset-password`, data)
+        return userApi.post(`/reset-password`, data)
     },
     resetPasswordByCode(data){
-        return api.post(`/api/user/change-password-by-code`, data)
+        return userApi.post(`/change-password-by-code`, data)
     }
 }

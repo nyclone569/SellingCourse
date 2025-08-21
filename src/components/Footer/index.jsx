@@ -1,4 +1,6 @@
+import { PATH } from '@/config/path'
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function Footer() {
     return (
@@ -28,10 +30,10 @@ export default function Footer() {
                             <nav>
                                 <ul>
                                     <li>
-                                        <a href="./">Trang chủ</a>
+                                        <NavLink to={PATH.home}>Trang chủ</NavLink>
                                     </li>
                                     <li>
-                                        <a href="./course-list.html">Khóa Học</a>
+                                        <NavLink to={PATH.course}>Khóa Học</NavLink>
                                     </li>
                                     <li>
                                         <a href="#">Thanh toán</a>

@@ -23,7 +23,7 @@ export default function ListCourse() {
                 <div className="list row">
                     {
                         loading ? Array.from(Array(6)).map((_, i) => <CourseCardLoading key={i}/>) :
-                        courses.data.map(e => <CourseCard key={e.id} {...e} />)                        
+                        (courses && courses.data && Array.isArray(courses.data) ? courses.data.map(e => <CourseCard key={e.id} {...e} />) : [])
                     }
                 </div>
             </div>

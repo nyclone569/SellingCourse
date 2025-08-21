@@ -23,9 +23,9 @@ export default function CourseDetailPage() {
     const {data: related} = useFetch(() => courseService.getRelated(id), [id])
     
     const {openingTime, registerPath} = useMemo(() => {
-        if(detail){
+        if(detail && detail.data){
             const registerPath = generatePath(PATH.courseRegister, { slug: detail.data.slug, id: detail.data.id })
-            const openingTime = moment(detail.opening_time).format('DD/MM/YYYY')
+            const openingTime = moment(detail.data.opening_time).format('DD/MM/YYYY')
             return {
                 registerPath, openingTime
             }
@@ -56,7 +56,7 @@ export default function CourseDetailPage() {
                 </main>
     }
 
-    if(!detail) return <Page404 />  
+    if(!detail || !detail.data) return <Page404 />  
 
     return (
         <main id="main">
@@ -87,7 +87,7 @@ export default function CourseDetailPage() {
                             <div className="video" onClick={() => setIsOpenVideoModal(true)}>
                                 <div className="icon">
                                     <img src="/img/play-icon-white.png" alt="" />
-                                </div>{" "}
+                                </div> 
                                 <span>giới thiệu</span>
                             </div>
                             <div className="money">{currency(detail.data.money)} VND</div>
@@ -133,7 +133,7 @@ export default function CourseDetailPage() {
                             <Teacher {...detail.data.teacher}/>
                         </div>
                         {
-                            detail.data.mentor.length > 0 && <>
+                            detail.data.mentor && detail.data.mentor.length > 0 && <>
                                 <h3 className="title">Người hướng dẫn</h3>
                                 <div className="teaches">
                                     {
@@ -161,7 +161,7 @@ export default function CourseDetailPage() {
                         </div>
                         <div className="list row">
                             {
-                                related && related?.data.map(e => <CourseCard key={e.id} {...e}/>)
+                                related && related.data && Array.isArray(related.data) && related.data.map(e => <CourseCard key={e.id} {...e}/>)
                             }
                         </div>
                     </div>
