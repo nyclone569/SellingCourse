@@ -8,7 +8,11 @@ export const AUTHENTICATION_API = import.meta.env.VITE_AUTHENTICATION_API
 
 // Create separate axios instances for each API
 export const courseApi = axios.create({
-  baseURL: COURSE_API
+  baseURL: COURSE_API,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
 })
 
 export const organizationApi = axios.create({
@@ -20,7 +24,11 @@ export const userApi = axios.create({
 })
 
 export const authApi = axios.create({
-  baseURL: AUTHENTICATION_API
+  baseURL: AUTHENTICATION_API,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 })
 
 // Track refresh token requests to prevent infinite loops
@@ -107,6 +115,8 @@ const setupInterceptors = (apiInstance) => {
     if(token && token.accessToken){
       config.headers['Authorization'] = `Bearer ${token.accessToken}`
     }
+    config.headers['Accept'] = 'application/json'
+    config.headers['Content-Type'] = 'application/json'
     return config
   })
 }
