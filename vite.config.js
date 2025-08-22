@@ -6,11 +6,11 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './', // Add this line for relative paths
-  server: {
-    proxy: {
-      '/api': 'https://course.spacedev.vn', 
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': 'https://course.spacedev.vn', 
+  //   },
+  // },
   build: {
     rollupOptions: {
       output: {
