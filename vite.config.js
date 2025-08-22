@@ -8,7 +8,7 @@ export default defineConfig({
   base: './', // Add this line for relative paths
   server: {
     proxy: {
-      '/api': 'https://course.spacedev.vn', 
+      '/elearning/v4': 'https://course.spacedev.vn', 
     },
   },
   build: {
