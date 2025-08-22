@@ -74,7 +74,7 @@ Still, some features are still in development and are not yet fully implemented 
 </table>
 
 ## 🛠️ Installation
-Here is the website hosted on Netlify: [Selling Courses](https://sellingcourse.netlify.app)
+Here is the demo website hosted on Netlify: [Selling Courses](https://sellingcoursess.netlify.app)
 
 To run this project locally, you can follow these steps:
 
