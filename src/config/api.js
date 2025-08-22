@@ -24,11 +24,7 @@ export const userApi = axios.create({
 })
 
 export const authApi = axios.create({
-  baseURL: AUTHENTICATION_API,
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
+  baseURL: AUTHENTICATION_API
 })
 
 // Track refresh token requests to prevent infinite loops
@@ -115,8 +111,6 @@ const setupInterceptors = (apiInstance) => {
     if(token && token.accessToken){
       config.headers['Authorization'] = `Bearer ${token.accessToken}`
     }
-    config.headers['Accept'] = 'application/json'
-    config.headers['Content-Type'] = 'application/json'
     return config
   })
 }
