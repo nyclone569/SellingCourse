@@ -1,20 +1,29 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
+// --- Configure CORS ---
+const corsOptions = {
+  origin: '*', // Replace with your actual frontend URL(s)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+// Apply CORS middleware globally
+app.use(cors(corsOptions));
+
 // Serve static files from the dist directory
-app.use(
-  cors({
-    origin: '*', // Adjust this to your needs
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  })
-)
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Handle SPA routing - send index.html for all non-static routes
-app.get('*', (req, res) => {
+// Use a more specific pattern to avoid path-to-regexp issues
+app.get(/^(?!\/(api|assets|css|js|img|fonts|scss|dest|zohoverify)).*$/, (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
