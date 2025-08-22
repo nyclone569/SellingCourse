@@ -5,10 +5,22 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './', // Add this line for relative paths
   server: {
     proxy: {
       '/elearning/v4': 'https://course.spacedev.vn', 
     },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['antd', '@ant-design/icons'],
+          utils: ['axios', 'moment']
+        }
+      }
+    }
   },
   plugins: [react()],
   resolve: {
